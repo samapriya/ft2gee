@@ -19,7 +19,10 @@ __license__ = "Apache 2.0"
 
 #! /usr/bin/env python
 
-import argparse,os,ee,sys,platform
+
+import os,ee,sys,platform,subprocess,shutil,argparse
+from oauth2client.tools import argparser
+from oauth2client import file as oauth_file, client, tools
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 from gdrive2tab import dr2ee
 from ee_ftables_tables import fexp
@@ -56,14 +59,17 @@ def fscript_from_parser(args):
     fscript(local=args.local,geepath=args.gee)
 
 spacing="                               "
+
 def main(args=None):
-    parser = argparse.ArgumentParser(description='Fusion table to EE tables CLI')
+    parser = argparse.ArgumentParser(description='Fusion table to EE tables CLI',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        parents=[tools.argparser])
     subparsers = parser.add_subparsers()
 
     parser_quota = subparsers.add_parser('quota', help='Print Earth Engine total quota and used quota')
     parser_quota.set_defaults(func=quota_from_parser)
 
-    parser_dr2ee = subparsers.add_parser('drive2gee', help='Exports Google Drive Fusion tables to Earth Engine tables')
+    parser_dr2ee = subparsers.add_parser('drive2tab', help='Exports Google Drive Fusion tables to Earth Engine tables')
     required_named = parser_dr2ee.add_argument_group('Required named arguments.')
     required_named.add_argument('--gee', help='Path to Google Earth Engine asset folder for tables to be exported', required=True)
     optional_named = parser_dr2ee.add_argument_group('Optional named arguments')
