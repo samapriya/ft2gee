@@ -31,11 +31,14 @@ def exportnow(collection, filename, filepath):
         pass
 
 def dr2ee(geepath,credpath):
-    if credpath is not None and os.path.isfile(os.path.join(basepath,'credentials.json')):
+    if credpath is not None:
         os.unlink(basepath,'credentials.json')
         shutil.copy(credpath,basepath)
-    else:
-        shutil.copy(credpath,basepath)
+    elif credpath is None and os.path.isfile(os.path.join(basepath,'credentials.json')):
+        print('Using Existing Credential File')
+    elif credpath is None and (not os.path.isfile(os.path.join(basepath,'credentials.json'))):
+        print('No credentials found saved or supplied: Supply path to credential file')
+        sys.exit()
     store = oauth_file.Storage('token.json')
     creds = store.get()
     if not creds or creds.invalid:
