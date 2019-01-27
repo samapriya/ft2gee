@@ -1,0 +1,4 @@
+earthengine_api >= 0.1.87
+requests >= 2.19.0
+httplib2>=0.11.3
+pendulum>=2.0.2
