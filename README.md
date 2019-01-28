@@ -1,5 +1,5 @@
 # ft2gee: Fusion table to EE tables CLI
-Convert all fusion table in your Google Drive and Google Earth Engine scripts to Google Earth Engine Tables. The tool was resultant of the end of service for Google Fusion tables at the end of 2019 and while there might be migration options available at that period of time, earlier and more consistent move out of the Fusion table environment maybe necessary for some workflow. This requires creation of the Google Drive API credentials file with read access to run this on your Google Drive and you can find a more [detailed tutorial here]().
+Convert all fusion table in your Google Drive and Google Earth Engine scripts to Google Earth Engine Tables. The tool was resultant of the end of service for Google Fusion tables at the end of 2019 and while there might be migration options available at that period of time, earlier and more consistent move out of the Fusion table environment maybe necessary for some workflow. This requires creation of the Google Drive API credentials file with read access to run this on your Google Drive and you can find a more [detailed tutorial here](https://medium.com/@samapriyaroy/google-fusion-table-migration-with-within-google-earth-engine-93d103111ce7).
 
 ## Table of contents
 * [Installation](#installation)
