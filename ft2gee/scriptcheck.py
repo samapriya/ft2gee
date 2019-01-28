@@ -25,7 +25,7 @@ def fscript(local, geepath):
                     id = line.split('ft:')[1].split("'")[0]
                     name = line.split('var')[1].split('=')[0]
                     name = str(re.sub('[^A-Za-z0-9]+', '', name))
-                    filepath = geepath + str(re.sub('[^A-Za-z0-9]+', ''
+                    filepath = geepath + '/'+str(re.sub('[^A-Za-z0-9]+', ''
                             , name))
                     combined = str(id) + '&' + str(name) + '&' \
                         + str(filepath)

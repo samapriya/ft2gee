@@ -26,6 +26,11 @@ def exportnow(collection,filename,filepath):
 #Function to access ftables in scripts and export to tables in EE
 ftable=[]
 def fexp(local,geepath):
+    if ee.data.getInfo(geepath):
+        print('Folder already exists.')
+    else:
+        print('Creating Folder')
+        ee.data.createAsset({'type': ee.data.ASSET_TYPE_FOLDER}, geepath)
     for dirpath,_,filenames in os.walk(local):
         for f in filenames:
             if not dirpath.endswith('.git'):
@@ -37,7 +42,7 @@ def fexp(local,geepath):
                                 id=(line.split('ft:')[1].split("'")[0])
                                 name=(line.split('var')[1].split("=")[0])
                                 name=str(re.sub('[^A-Za-z0-9]+', '', name))
-                                filepath=geepath+str(re.sub('[^A-Za-z0-9]+', '', name))
+                                filepath=geepath+'/'+str(re.sub('[^A-Za-z0-9]+', '', name))
                                 combined=str(id)+'&'+str(name)+'&'+str(filepath)
                                 ftable.append(combined)
                             except Exception as e:
@@ -48,7 +53,7 @@ def fexp(local,geepath):
                                 id=(line.split('ft:')[1].split('"')[0])
                                 name=(line.split('var')[1].split('=')[0])
                                 name=str(re.sub('[^A-Za-z0-9]+', '', name))
-                                filepath=geepath+str(re.sub('[^A-Za-z0-9]+', '', name))
+                                filepath=geepath+'/'+str(re.sub('[^A-Za-z0-9]+', '', name))
                                 #print(str(id),name,filepath)
                                 combined=str(id)+'&'+str(name)+'&'+str(filepath)
                                 ftable.append(combined)
@@ -60,6 +65,10 @@ def fexp(local,geepath):
         name=(items.split('&')[1])
         filepath=(items.split('&')[2])
         print('Attempting export: '+str(name)+' to '+str(filepath))
-        exportnow(collection=id,filename=name,filepath=filepath)
+        if ee.data.getInfo(filepath):
+            print('File Already Exists: Skipping '+str(filepath))
+        else:
+            exportnow(collection=id,filename=name,filepath=filepath)
+
 
 # fexp(local=r'C:\Users\samapriya\Box Sync\IUB\Pycodes\Applications and Tools\Earth Engine Codes\EE_Repo_Headless\samapriya-default',geepath='users/samapriya/vec/')

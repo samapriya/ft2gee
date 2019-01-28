@@ -31,6 +31,11 @@ def exportnow(collection, filename, filepath):
         pass
 
 def dr2ee(geepath,credpath):
+    if ee.data.getInfo(geepath):
+        print('Folder already exists.')
+    else:
+        print('Creating Folder')
+        ee.data.createAsset({'type': ee.data.ASSET_TYPE_FOLDER}, geepath)
     if credpath is not None:
         os.unlink(basepath,'credentials.json')
         shutil.copy(credpath,basepath)
@@ -56,6 +61,10 @@ def dr2ee(geepath,credpath):
         for item in items:
             if item['mimeType']=='application/vnd.google-apps.fusiontable':# Remove this line to remove the filter
                 #print(u'{0} ({1})'.format(item['name'], item['id'],item['mimeType']))
-                exportnow(collection=item['id'],filename=item['name'],filepath=geepath+str(re.sub('[^A-Za-z0-9]+', '', item['name'])))
+                filepath=geepath+'/'+str(re.sub('[^A-Za-z0-9]+', '', item['name']))
+                if ee.data.getInfo(filepath):
+                    print('File Already Exists: Skipping '+str(filepath))
+                else:
+                    exportnow(collection=item['id'],filename=item['name'],filepath=geepath+'/'+str(re.sub('[^A-Za-z0-9]+', '', item['name'])))
 
 # dr2ee(geepath='users/samapriya/vec/',credpath=r'C:\Users\samapriya\Box Sync\IUB\Pycodes\Applications and Tools\Drive\drive_tests\credentials.json')
